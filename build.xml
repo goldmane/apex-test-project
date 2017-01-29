@@ -1,14 +1,26 @@
-<project name="MyProject" default="dist" basedir=".">
+<project name="MyProject" default="dist" basedir="." xmlns:sf="antlib:com.salesforce">
+
+  <taskdef resource="com/salesforce/antlib.xml" uri="antlib:com.salesforce">
+		<classpath>
+			<pathelement location="ant-salesforce.jar" />          
+		</classpath>
+	</taskdef>
+
+	<target name="deploy">
+		<sf:deploy username="${sf.username}" password="${sf.password}" 
+			serverurl="https://login.salesforce.com" deployRoot="sfdc" 
+			rollbackOnError="true" checkOnly="true" />
+	</target>
 
   <target name="pmd">
-    <taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask" classpath="${basedir}/apex-core-5.4.3.jar"/>
+	<taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask" classpath="${basedir}/apex-core-5.4.3.jar"/>
    <pmd shortFilenames="true">
-    <sourceLanguage name="apex" />
-    <ruleset>rulesets/apex/ruleset.xml</ruleset>
-    <formatter type="html" toFile="pmd_report.html"/>
-    <fileset dir=".">
-     <include name="*.cls"/>
-    </fileset>
+	<sourceLanguage name="apex" />
+	<ruleset>rulesets/apex/ruleset.xml</ruleset>
+	<formatter type="html" toFile="pmd_report.html"/>
+	<fileset dir=".">
+	 <include name="*.cls"/>
+	</fileset>
    </pmd>
   </target>
 </project>
