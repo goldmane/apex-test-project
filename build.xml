@@ -21,9 +21,18 @@
 
 <taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask" classpathref="pmd.classpath"/>
 
-<target name="pmd">
+<target name="pmd-jenkins">
       <pmd rulesetfiles="rulesets/apex/ruleset.xml">
           <formatter type="xml" toFile="pmd.xml" toConsole="true"/>
+          <fileset dir=".">
+              <include name="**/*.cls"/>
+          </fileset>
+      </pmd>
+</target>
+
+<target name="pmd">
+      <pmd rulesetfiles="rulesets/apex/ruleset.xml,rulesets/apex/security.xml">
+          <formatter type="text" toConsole="true"/>
           <fileset dir=".">
               <include name="**/*.cls"/>
           </fileset>
