@@ -1,6 +1,6 @@
 <project name="MyProject" default="dist" basedir=".">
 
-  <target name="pmd">
+  <!--<target name="pmd">
     <taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask" classpath="${basedir}/apex-core-5.4.3.jar"/>
    <pmd shortFilenames="true">
     <sourceLanguage name="apex" />
@@ -10,5 +10,23 @@
      <include name="*.cls"/>
     </fileset>
    </pmd>
-  </target>
+  </target>-->
+
+  <path id="pmd.classpath">
+    <pathelement location="${build}"/>
+    <fileset dir="./pmd/lib">
+        <include name="*.jar"/>
+    </fileset>
+</path>
+
+<taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask" classpathref="pmd.classpath"/>
+
+<target name="pmd">
+      <pmd rulesetfiles="rulesets/apex/ruleset.xml">
+          <formatter type="xml" toFile="pmd.xml" toConsole="true"/>
+          <fileset dir=".">
+              <include name="**/*.cls"/>
+          </fileset>
+      </pmd>
+</target>
 </project>
